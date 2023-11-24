@@ -11,6 +11,7 @@ from openpyxl import load_workbook
 #사용전에 pip install selenium,pip install webdriver-manager, pip install bs4 터미널로 설치
 def dynamic():
     #엑셀 저장하기 위한 코드코드
+    #이거 변경하면 깃에 들어가나요
     load_xlsx = load_workbook('C:/teamproject/front_end/excel/file.xlsx', 
                        read_only=False,
                        keep_vba=False,
