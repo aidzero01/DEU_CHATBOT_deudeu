@@ -10,7 +10,11 @@ app = Flask(__name__)
 excel_file_path = 'C:/teamproject/front_end/excel/file.xlsx'
 
 # 엑셀 파일에서 데이터를 읽어옵니다.
-df = pd.read_excel(excel_file_path)
+df = pd.read_excel(excel_file_path,sheet_name='question')
+df_menu = pd.read_excel(excel_file_path, sheet_name='menu', index_col='행긱')
+
+# 'menu' 시트의 인덱스 확인
+print(df_menu.index)
 
 @app.route('/')
 def index():
@@ -35,12 +39,28 @@ def replace_nan(value):
     return value
 
 def search_answer(user_question):
+    # 'question' 시트에서 질문과 답변 정보 읽기
     question_row = df[df['질문'].str.lower().str.contains(user_question.lower(), na=False)]
-    
     if not question_row.empty:
-        
         row = question_row.iloc[random.randint(0, len(question_row)-1)]            
         return row['답변'], row['부가설명']
+    
+    # 'menu' 시트에서 모든 행의 데이터 읽기
+    elif "메뉴" in user_question or "학식" in user_question:
+        # 모든 행의 레이블을 가져옵니다.
+        menu_meals = df_menu.index.tolist()
+        
+        # 각 아침, 점심, 저녁 메뉴를 나눠서 문자열로 구성
+        menu_data_list = []
+        for meal in menu_meals:
+            menu_items = df_menu.loc[meal].apply(str).values.flatten().tolist()
+            menu_str = f"{meal}:\n{', '.join(menu_items)}\n"
+            menu_data_list.append(menu_str)
+
+        # 가져온 메뉴 정보를 줄바꿈으로 구분한 문자열로 반환
+        menu_str = '\n'.join(menu_data_list)
+        return menu_str, ''
+    
     else:
         return '죄송합니다. 해당 질문에 대한 답변을 찾을 수 없습니다.', ''
 
