@@ -269,12 +269,11 @@
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = '<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">' + question + '</p></div></div>' +
-
                                   '<div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><p class="chatbot_left">' + answer + '</p></div></div>';
            
             // 부가설명이 있는 경우에만 표시
             if (additional_info.trim() !== '') {
-                chatEntry.innerHTML += '<div><img src="' + additional_info + '" alt="Response Image" class="response-image" ></div>';
+                chatEntry.innerHTML += '<div class="chatbot_r" id="chat_r_wrap"><div class="chatbot_left_wrap"><p class="chatbot_left"><img src="' + additional_info + '" alt="Response Image" class="response-image" ></p></div></div>';
             } 
             chatContainer.appendChild(chatEntry);
 
