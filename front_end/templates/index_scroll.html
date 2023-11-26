@@ -7,10 +7,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>대학교 질의 응답 챗봇</title> 
     <style>
+        #introduce{
+            width:500px; 
+            font-size: 0.9rem; 
+            line-height: 1.3; 
+            letter-spacing: -0.4px; 
+            white-space: normal;
+        }
+        .menu_link_title {
+            font-weight: 700;
+            padding-top: 2px;
+            padding-bottom: 2px;
+            text-align: center;
+            border-radius: 8px;
+            border: 1px solid #dbe3e8;
+            background-color: #fff;
+            box-sizing: border-box;
+            margin-top: 5px;
+            width: 100%;
+        }
+        .menu_item {
+            display: inline-block;
+            width: 32.5%;
+            vertical-align: bottom;
+        }
+        .menu_item .menu_link:hover {
+            background-color: #dbe3e8;
+        }
+        .menu_item .menu_link {
+            display: block;
+            padding-top: 9px;
+            min-width: 68px;
+            height: 80px;
+            margin: 8px 0 0 5px;
+            text-align: center;
+            border-radius: 10px;
+            border: 1px solid #dbe3e8;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
         *{
             margin: 0;
             padding: 0;
         }
+        
         a{
             text-decoration: none;
         }
@@ -172,6 +212,10 @@
             width: 300px;
             height: 300px;
         }
+
+
+        
+        
         /* bottom 끝 */
 </style>
 </head>
@@ -187,7 +231,88 @@
             <div id="chat-container">
                 <div id="chat-content">
                     <div id="chat-container-wrap">
+
+
                         <!-- 질문과 답변이 표시될 부분 -->
+                        <div class="chatbot_r" id="chat_r_wrap">
+                            <span class="bot_img">
+                                <img src="static/images/left_logo.jpg" id="chatbot-img">
+                            </span>
+                            <div class="chatbot_left_wrap">
+                                <div id="introduce" class="chatbot_left"> 
+                                    안녕하세요, 동의대학교 챗봇 듀버디(DEUBUDDY)입니다😊<br><br>궁금한 부분이 있나요❓<br><br>언제나 여러분의 궁금증을 해결해주는 듀버디가 바로 답변해 드려요!😘<br><br>📌아래의 버튼 중 필요하신 정보가 있다면 버튼을 꾹 눌러주세요!!
+                                    <div tabindex="0" class="menu_link_title">자주 질문하는 정보</div>
+                                    
+                                    <!--여기서부터 메뉴버튼태그들 -->
+                                    
+                                    <div>
+                                        <div class="eg-flick-viewport"
+                                            style="position: relative; z-index: 8; overflow: hidden; min-height: 100%; width: 100%; touch-action: pan-y; user-select: none; -webkit-user-drag: none; height: 264px;">
+                                            <div class="eg-flick-camera"
+                                                style="width: 100%; height: 100%; will-change: transform; transform: translate3d(0px, 0px, 0px);">
+                                                <ul class="menu_list eg-flick-panel"
+                                                    style="width: 100%; display: inline-block; position: absolute; left: 0px;">
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/1_phone-book.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>교내 연락처<br></span></span></div>
+                                                        </a></li>
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/2_spoon-and-fork.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>학식 메뉴<br></span></span></div>
+                                                        </a></li>
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/5_schedule.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>학사일정<br></span></span></div>
+                                                        </a></li>
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/7_documents.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>증명서<br></span></span></div>
+                                                        </a></li>
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/9_grades.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>학점조회<br></span></span></div>
+                                                        </a></li>
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/12_education.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>졸업<br></span></span></div>
+                                                        </a></li>
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/15_online-learning.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>e-class<br></span></span></div>
+                                                        </a></li>
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/14_online-library.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>도서관<br></span></span></div>
+                                                        </a></li>
+                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                                style="background-image: url(&quot;https://advisor.cau.ac.kr/image/h_bear.png&quot;);"></span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>인권센터<br></span></span></div>
+                                                        </a></li>
+                                                </ul>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!--여기까지 메뉴버튼 태그들-->
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+                        </div>  
+                                
+                        <!-- 질문과 답변이 표시될 부분11 -->
+                        
                     </div>
             
                     <div id="loading-indicator">로딩 중...</div>
