@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from openpyxl import Workbook
 from openpyxl import load_workbook
+import string
 #사용전에 pip install selenium,pip install webdriver-manager, pip install bs4 터미널로 설치
 def dynamic():
 
@@ -50,17 +51,16 @@ def dynamic():
         kd = driver.find_element(By.XPATH,Kdinner)
         
         #배열에 각 요일별 한식 아침메뉴 넣음
-        Korean_morning.append(km.text)
-        Korean_lunch.append(kl.text)
-        Korean_dinner.append(kd.text)
-
+        Korean_morning.append("-"+km.text)
+        Korean_lunch.append("-"+kl.text)
+        Korean_dinner.append("-"+kd.text)
 
     
-    print(Korean_morning)
-    print()
-    print(Korean_lunch)
-    print()
-    print(Korean_dinner)
+    for i in range(0,7):
+        Korean_morning[i] = Korean_morning[i].replace(" ","\n-")
+        Korean_lunch[i] = Korean_lunch[i].replace(" ","\n-")
+        Korean_dinner[i] = Korean_dinner[i].replace(" ","\n-")
+
 
     for i in range(1,8):
         load_sheet.cell(row=10, column=i+1, value=Korean_morning[i-1])
