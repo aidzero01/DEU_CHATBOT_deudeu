@@ -404,24 +404,6 @@
             xhr.send('user_question=' + encodeURIComponent(userQuestion));
         }
 
-        function displayQuestionAndAnswer(question, answer, additional_info) {
-            var chatContainer = document.getElementById('chat-container-wrap');
-            var chatEntry = document.createElement('div');
-            chatEntry.innerHTML = '<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">' + question + '</p></div></div>' +
-                                  '<div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><p class="chatbot_left">' + answer + '</p></div></div>';
-           
-            // 부가설명이 있는 경우에만 표시
-            if (additional_info.trim() !== '') {
-                chatEntry.innerHTML += '<div class="chatbot_r" id="chat_r_wrap"><div class="chatbot_left_wrap"><p class="chatbot_left"><img src="' + additional_info + '" alt="Response Image" class="response-image" ></p></div></div>';
-            } 
-            chatContainer.appendChild(chatEntry);
-
-            // 스크롤을 항상 아래로 유지
-            chatContainer.scrollTop = chatContainer.scrollHeight;
-
-            // 입력 필드 초기화
-            document.getElementById('user-question').value = '';
-        }
 
         function sendQuestion_button(question_id) {
             var userQuestion =""
@@ -430,7 +412,6 @@
                 var userQuestion = "메뉴"
             }else if(question_id == "map"){
                 var userQuestion = "학교"
-
             }
           
             var chatContainer = document.getElementById('chat-container-wrap');
@@ -450,11 +431,13 @@
             xhr.send('user_question=' + encodeURIComponent(userQuestion));
         }
 
-        function displayQuestionAndAnswer_button(question, answer, additional_info) {
+
+
+        function displayQuestionAndAnswer(question, answer, additional_info) {
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = '<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">' + question + '</p></div></div>' +
-                                  '<div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><p class="chatbot_left">' + answer" + '</p></div></div>';
+                                  '<div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><p class="chatbot_left">' + answer + '</p></div></div>';
            
             // 부가설명이 있는 경우에만 표시
             if (additional_info.trim() !== '') {
@@ -468,11 +451,6 @@
             // 입력 필드 초기화
             document.getElementById('user-question').value = '';
         }
-        
-
-
-
-        
     </script>
 </body>
 </html>
