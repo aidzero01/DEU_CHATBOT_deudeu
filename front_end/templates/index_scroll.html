@@ -252,41 +252,54 @@
                                                 style="width: 100%; height: 100%; will-change: transform; transform: translate3d(0px, 0px, 0px);">
                                                 <ul class="menu_list eg-flick-panel"
                                                     style="width: 100%; display: inline-block; position: absolute; left: 0px;">
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
-                                                                style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/1_phone-book.png&quot;);"></span>
-                                                            <div class="menu_unit"><span class="menu_txt"><span>교내 연락처<br></span></span></div>
+                                                    <li class="menu_item">
+
+                                                        <a href="#none" class="menu_link" tabindex="0" id = "menu" onclick="sendQuestion_button(this.id)">
+                                                            <span id = "question_menu_button" class="ico_comm" style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/1_phone-book.png&quot;);">
+                                                            </span>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>메뉴<br></span></span></div>
                                                         </a></li>
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+
+                                                    <li class="menu_item">
+                                                        <a href="#none" class="menu_link" tabindex="0" id="map" onclick="sendQuestion_button(this.id)">
+                                                            <span class="ico_comm"
                                                                 style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/2_spoon-and-fork.png&quot;);"></span>
-                                                            <div class="menu_unit"><span class="menu_txt"><span>학식 메뉴<br></span></span></div>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>학교 위치<br></span></span></div>
                                                         </a></li>
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                    <li class="menu_item">
+                                                        <a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
                                                                 style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/5_schedule.png&quot;);"></span>
                                                             <div class="menu_unit"><span class="menu_txt"><span>학사일정<br></span></span></div>
                                                         </a></li>
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                    <li class="menu_item">
+                                                        <a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
                                                                 style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/7_documents.png&quot;);"></span>
-                                                            <div class="menu_unit"><span class="menu_txt"><span>증명서<br></span></span></div>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>공지사항<br></span></span></div>
                                                         </a></li>
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                    <li class="menu_item">
+                                                        <a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
                                                                 style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/9_grades.png&quot;);"></span>
-                                                            <div class="menu_unit"><span class="menu_txt"><span>학점조회<br></span></span></div>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>등록금<br></span></span></div>
                                                         </a></li>
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                    <li class="menu_item">
+                                                        <a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
                                                                 style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/12_education.png&quot;);"></span>
-                                                            <div class="menu_unit"><span class="menu_txt"><span>졸업<br></span></span></div>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>셔틀버스 시간<br></span></span></div>
                                                         </a></li>
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                    <li class="menu_item">
+                                                        <a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
                                                                 style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/15_online-learning.png&quot;);"></span>
-                                                            <div class="menu_unit"><span class="menu_txt"><span>e-class<br></span></span></div>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>교내 연락처<br></span></span></div>
                                                         </a></li>
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                    <li class="menu_item">
+                                                        <a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
                                                                 style="background-image: url(&quot;https://chat.cau.ac.kr/v2/img/button_img/14_online-library.png&quot;);"></span>
-                                                            <div class="menu_unit"><span class="menu_txt"><span>도서관<br></span></span></div>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>중앙도서관<br></span></span></div>
                                                         </a></li>
-                                                    <li class="menu_item"><a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
+                                                    <li class="menu_item">
+                                                        <a href="#none" class="menu_link" tabindex="0"><span class="ico_comm"
                                                                 style="background-image: url(&quot;https://advisor.cau.ac.kr/image/h_bear.png&quot;);"></span>
-                                                            <div class="menu_unit"><span class="menu_txt"><span>인권센터<br></span></span></div>
+                                                            <div class="menu_unit"><span class="menu_txt"><span>하나는 머지<br></span></span></div>
                                                         </a></li>
                                                 </ul>
                                                 
@@ -390,6 +403,7 @@
             };
             xhr.send('user_question=' + encodeURIComponent(userQuestion));
         }
+
         function displayQuestionAndAnswer(question, answer, additional_info) {
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
@@ -408,6 +422,57 @@
             // 입력 필드 초기화
             document.getElementById('user-question').value = '';
         }
+
+        function sendQuestion_button(question_id) {
+            var userQuestion =""
+
+            if(question_id == "menu"){
+                var userQuestion = "메뉴"
+            }else if(question_id == "map"){
+                var userQuestion = "학교"
+
+            }
+          
+            var chatContainer = document.getElementById('chat-container-wrap');
+
+            // AJAX를 사용하여 서버에 질문을 전송하고 응답을 받아옵니다.
+            document.getElementById('loading-indicator').style.display = 'block';
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/get_response', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    displayQuestionAndAnswer(response.question, response.response, response.additional_info);
+                    document.getElementById('loading-indicator').style.display = 'none';
+                }
+            };
+            xhr.send('user_question=' + encodeURIComponent(userQuestion));
+        }
+
+        function displayQuestionAndAnswer_button(question, answer, additional_info) {
+            var chatContainer = document.getElementById('chat-container-wrap');
+            var chatEntry = document.createElement('div');
+            chatEntry.innerHTML = '<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">' + question + '</p></div></div>' +
+                                  '<div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><p class="chatbot_left">' + answer" + '</p></div></div>';
+           
+            // 부가설명이 있는 경우에만 표시
+            if (additional_info.trim() !== '') {
+                chatEntry.innerHTML += '<div class="chatbot_r" id="chat_r_wrap"><div class="chatbot_left_wrap"><p class="chatbot_left"><img src="' + additional_info + '" alt="Response Image" class="response-image" ></p></div></div>';
+            } 
+            chatContainer.appendChild(chatEntry);
+
+            // 스크롤을 항상 아래로 유지
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // 입력 필드 초기화
+            document.getElementById('user-question').value = '';
+        }
+        
+
+
+
+        
     </script>
 </body>
 </html>
