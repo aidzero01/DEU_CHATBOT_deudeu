@@ -363,13 +363,11 @@
                                     <ul class="menu_list eg-flick-panel"
                                         style="width: 100%; display: inline-block; position: absolute; left: 0px;">
                                         <li class="menu_item">
-
                                             <a href="#none" class="menu_link" tabindex="0" id = "menu" onclick="sendQuestion_button(this.id)">
                                                 <span id = "question_menu_button" class="ico_comm"></span>
                                                  <img src="static/images/free-icon-recipe-12331598.png" alt="메뉴판" width="40px">
                                                 <div class="menu_unit"><span class="menu_txt"><span>메뉴<br></span></span></div>
                                             </a></li>
-
                                         <li class="menu_item">
                                             <a href="#none" class="menu_link" tabindex="0" id="map" onclick="sendQuestion_button(this.id)">
                                                 <span class="ico_comm"></span>                    
@@ -395,7 +393,7 @@
                                                 <div class="menu_unit"><span class="menu_txt"><span>등록금<br></span></span></div>
                                             </a></li>
                                         <li class="menu_item">
-                                            <a href="#none" class="menu_link" tabindex="0">
+                                            <a href="#none" id="bus_time" class="menu_link" tabindex="0" onclick="sendQuestion_button(this.id)">
                                                 <span class="ico_comm"></span>
                                                 <img src="static/images/free-icon-bus-stop-2684179.png" alt="셔틀버스 시간" width="40px">
                                                 <div class="menu_unit"><span class="menu_txt"><span>셔틀버스 시간<br></span></span></div>
@@ -454,7 +452,15 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
-                    displayQuestionAndAnswer(response.question, response.response, response.additional_info);
+                    // 질문이 '메뉴'일 경우 메뉴를 동적으로 생성하고 질문창의 내용을 지웁니다.
+                    if (userQuestion.toLowerCase().includes('메뉴')) {
+                        menu_button();
+                        document.getElementById('user-question').value = '';
+                    } else {
+                        // '메뉴'가 아닌 경우에만 답변 표시
+                        displayQuestionAndAnswer(response.question, response.response, response.additional_info);
+                    }
+                    
                     document.getElementById('loading-indicator').style.display = 'none';
                 }
             };
@@ -484,7 +490,7 @@
         function sendQuestion_button(question_id) {   
             var userQuestion = question_id;     
 
-            if(question_id == "menu"){
+            if(question_id == "menu" ){
                 menu_button();
             }else if(question_id == "map"){
                 userQuestion = "학교"
@@ -501,6 +507,8 @@
                 library_button();
             }else if(question_id=="enrolment"){
                 enrolment_button();
+            }else if(question_id=="bus_time"){
+                bus_time_button();
             }
         }
         
@@ -509,20 +517,34 @@
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">메뉴</p></div></div>
                                   <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
-                                    어떤 장소의  메뉴가 필요하신가요?<br><br>
-                                    <div tabindex="0" class="menu_link_title">식당</div>
-
+                                    다음은 동의대학교 메뉴에 관한 정보입니다 어떤 장소의 메뉴가 필요하신가요?<br><br>
+                                    <div tabindex="0" class="menu_link_title"> 행복 기숙사 메뉴  ||  효민 기숙사 메뉴 </div>
                                     <div class="menu_item1">
                                         <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
                                             <span id = "question_menu_button" class="ico_comm"></span>
-                                            <div class="menu_unit"><span class="menu_txt"><span>행운기숙사<br> 메뉴<br></span></span></div>
+                                            <div class="menu_unit"><span class="menu_txt"><span>아침 메뉴</span></span></div>
+                                        </a>
+                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
+                                            <span id = "question_menu_button" class="ico_comm"></span>
+                                            <div class="menu_unit"><span class="menu_txt"><span>점심 메뉴</span></span></div>
+                                        </a>
+                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
+                                            <span id = "question_menu_button" class="ico_comm"></span>
+                                            <div class="menu_unit"><span class="menu_txt"><span>저녁 메뉴</span></span></div>
                                         </a>
                                     </div>
-
                                     <div class="menu_item1">
-                                        <a href="#none" class="menu_link1" tabindex="0" id = "hyomenu" onclick = "menu_button_output(this.id)">
+                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
                                             <span id = "question_menu_button" class="ico_comm"></span>
-                                            <div class="menu_unit"><span class="menu_txt"><span>효민기숙사<br> 메뉴<br></span></span></div>
+                                            <div class="menu_unit"><span class="menu_txt"><span>아침 메뉴</span></span></div>
+                                        </a>
+                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
+                                            <span id = "question_menu_button" class="ico_comm"></span>
+                                            <div class="menu_unit"><span class="menu_txt"><span>점심 메뉴</span></span></div>
+                                        </a>
+                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
+                                            <span id = "question_menu_button" class="ico_comm"></span>
+                                            <div class="menu_unit"><span class="menu_txt"><span>저녁 메뉴</span></span></div>
                                         </a>
                                     </div>
                                    
@@ -549,12 +571,49 @@
                 }
             };
             if(idvalue=="hangmenu"){
-                xhr.send('user_question=' + encodeURIComponent("메뉴"));
+                xhr.send('user_question=' + encodeURIComponent("식단"));
             }else{
                 xhr.send('user_question=' + encodeURIComponent("말"));
             }
         }
 
+        function bus_time_button(){
+            var chatContainer = document.getElementById('chat-container-wrap');
+            var chatEntry = document.createElement('div');
+            chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">메뉴</p></div></div>
+                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left" style="width:710px">
+                                    다음은 동의대학교 셔틀버스 정류장 시간 및 위치입니다.<br><br>
+                                    <div tabindex="0" class="menu_link_title">순환버스 노선 및 운행시간 안내</div>
+                                        <div class="bus_time_p">
+                                            <p>■ 운행 시간 : 07:00 ~ 23:00 </p>
+                                            <p>■ 배차 간격 : 10분</p>
+                                            <p>■ 마을버스 6 : 대학본부 - 가야1치안센터</p>
+                                            <p>■ 마을버스 6-1 : 대학본부 - 동의대역 5번 출구</p>
+                                            <p>■ 마을버스 9 : 제1효민생활관(기숙사) - 주례 한일아파트</p>
+                                            <p>※ 110-1번 시내버스 오전 11:00까지 자연대 로타리 경유</p>
+                                        </div>
+
+                                    <div tabindex="0" class="menu_link_title">시외통학버스 지역별 노선도 및 탑승시간</div>
+                                        <div>
+                                            <p>■ 울산방면 :</p>
+                                            <p>■ 등교시 : 학성공원(07:00) → 태화로터리(07:10) → 공업탑로터리(07:15) → 신복로터리(07:20) → 동의대학교(08:35)</p>
+                                            <p>■ 하교시 : 동의대학교(18:10) → 신복로터리(19:10) → 공업탑로터리(19:25) → 태화로터리(19:35) → 학성공원(19:50)</p>
+                                            <p>■ 마산·장유방면 : 10분</p>
+                                            <p>■ 등교시 : 마산역 프리마호텔(07:25) → 장유고속버스환승정류장(07:55) → 동의대학교(08:35)</p>
+                                            <p>■ 하교시 : 동의대학교(18:10) → 장유고속버스환승정류장(19:00) → 마산역 프리마호텔(19:30)</p>
+                                            <p>■ 창원지역</p>
+                                            <p>■ 등교시 : 창원시외버스터미널 맞은편(07:25) → 남산시외터미널(07:40) → 동의대학교(08:35)</p>
+                                            <p>■ 하교시 : 동의대학교(18:10) → 남산시외버스터미널(19:10) → 창원시외버스터미널(19:25)</p>
+                                        </div>
+                                        <div tabindex="0" class="menu_link_title">※ 더 자세한 내용은 링크 참고 : <a href="https://www.deu.ac.kr/www/content/13"> 자세히 보기</div>
+                                    </div></div></div>`;
+
+            //위의 chatEntry내용을 html에 넣음
+            chatContainer.appendChild(chatEntry);
+
+            // 스크롤을 항상 아래로 유지
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
         function schedule_button() {
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
@@ -716,11 +775,7 @@
             // 스크롤을 항상 아래로 유지
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
-
-
-
-
-        
+       
         function else_button(userQuestion){ // 값을 app.py로 넘겨서 엑셀에서 값을 출력할 필요가 있는 경우 사용
             var chatContainer = document.getElementById('chat-container-wrap');
 
