@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/autocomplete.js"></script>
     <title>대학교 질의 응답 챗봇</title> 
     <style>
         .btn_refresh .ico_refresh {
@@ -13,7 +14,6 @@
             padding-right: 10px;
             background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAwUExURUdwTABGKgBgOABGKgBHKwBJMQBHKgBGKwBHKgBRMABJLQBHKwBHKwBGKwBHLABGKqBGkLYAAAAPdFJOUwDkBvOBGbqW0Qwnj2NFShYZgxEAAAEASURBVDjLY2AYbkCvrNki/RKIxYIiHm7/Hwg+lwKZ/sjiKmBxoIwTA8t/JHHW/v9Q8C3AH1li4f//H+tWznou//+/+H8kCVb5/x8PgBg6YBMREhr//2dCWGGoEv7/f0NZTP3IEqz2/xOgTBYUHez/P06A60WWUP7/B1kDQuL9fwFkDQiJ+v8bkDUgJPL/X0DWgJDo/78Ae4jb/1cgUQKnUXDL0QHcuejgPtyDQKD4/x+WIAGC8/+FsAUiA6c8krlIwc6g9v9zANaIyv//hQFb1E77/z+JAVtiADICGDCSz9TXwOQjheITRIL7EYDqR6QkigagiXor1mxg2P1y2OVuACxEtOfI3V1aAAAAAElFTkSuQmCC);
         }
-        
         .ico_comm {
             overflow: hidden;
             display: inline-block;
@@ -156,8 +156,8 @@
         }
         #chatbot-img {
             line-height: 30px;
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
         }
         .chatbot_q{
             display: block;
@@ -177,7 +177,6 @@
         .chatbot_left{
             position: relative;
             padding: 10px;
-            border-radius: 0 15px 15px;
             background-color: #eff5fc;
             letter-spacing: -.4px;
             line-height: 1.3;
@@ -194,7 +193,8 @@
         }
         .chatbot_left_wrap {
             position: relative;
-             max-width: 85%;
+            max-width: 85%;
+            border-radius: 0 15px 15px;
         }
         .bot_img {
             position: absolute;
@@ -203,6 +203,7 @@
             width: 40px;
             height: 40px;
         }
+
         /* 중간 전송 컨테이너 부문 끝 */
         /* bottom 부문 */
         #chat-bottom {
@@ -260,11 +261,8 @@
         .response-image {
             width: 300px;
             height: 300px;
-        }
+        }     
 
-
-        
-        
         /* bottom 끝 */
 </style>
 </head>
@@ -297,7 +295,7 @@
                         <button type="button" class="btn_refresh" onclick = "InitMenu()"><span class="ico_comm ico_refresh">새로고침</span></button>
                         <label for="user-question"></label>
                         <div id="chat-form-txt">
-                            <input type="text" id="user-question" class="user-question-box" name="user_question" required>
+                            <input type="text" id="user-question" class="user-question-box autocomplete" name="user_question" required>
                         <button id="user-question-button" type="button" onclick="sendQuestion()">
                             <span class="user-send"></span>
                         </button>
@@ -346,7 +344,7 @@
             chatEntry.innerHTML = 
             `<div class="chatbot_r" id="chat_r_wrap">
                 <span class="bot_img">
-                    <img src="static/images/left_logo.jpg" id="chatbot-img">
+                    <img src="static/images/left_logo.png" id="chatbot-img">
                 </span>
                 <div class="chatbot_left_wrap">
                     <div id="introduce" class="chatbot_left"> 
@@ -413,6 +411,7 @@
                                         <li class="menu_item">
                                             <a href="#none" class="menu_link" tabindex="0" id="enrolment" onclick="sendQuestion_button(this.id)">
                                                 <span class="ico_comm"></span>
+                                                <img src="static/images/8_payment.png" alt="수강신청" width="40px">
                                                 <div class="menu_unit"><span class="menu_txt"><span>수강신청<br></span></span></div>
                                             </a></li>
                                     </ul>
@@ -453,10 +452,29 @@
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var response = JSON.parse(xhr.responseText);
                     // 질문이 '메뉴'일 경우 메뉴를 동적으로 생성하고 질문창의 내용을 지웁니다.
-                    if (userQuestion.toLowerCase().includes('메뉴')) {
-                        menu_button();
+                    if (userQuestion.toLowerCase().includes('메뉴') || userQuestion.toLowerCase().includes('오늘의 메뉴보여줘') || userQuestion.toLowerCase().includes('식사')) {
+                        menu_button(response.question);
                         document.getElementById('user-question').value = '';
-                    } else {
+                    }else if (userQuestion.toLowerCase().includes('셔틀버스 시간')) {
+                        bus_time_button();
+                        document.getElementById('user-question').value = '';
+                    }else if (userQuestion.toLowerCase().includes('공지사항')) {
+                        announcement_button();
+                        document.getElementById('user-question').value = '';
+                    }else if (userQuestion.toLowerCase().includes('학사일정')) {
+                        schedule_button();
+                        document.getElementById('user-question').value = '';
+                    }else if (userQuestion.toLowerCase().includes('등록금')) {
+                        tuition_button();
+                        document.getElementById('user-question').value = '';
+                    }else if (userQuestion.toLowerCase().includes('교내 연락처')) {
+                        contact_button();
+                        document.getElementById('user-question').value = '';
+                    }else if (userQuestion.toLowerCase().includes('중앙도서관')) {
+                        library_button();
+                        document.getElementById('user-question').value = '';
+                    }
+                    else {
                         // '메뉴'가 아닌 경우에만 답변 표시
                         displayQuestionAndAnswer(response.question, response.response, response.additional_info);
                     }
@@ -471,11 +489,14 @@
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = '<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">' + question + '</p></div></div>' +
-                                  '<div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><p class="chatbot_left">' + answer + '</p></div></div>';
+                                  '<div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap"><p class="chatbot_left">' + answer + '</p></div></div>';
            
-            // 부가설명이 있는 경우에만 표시
+            // 부가설명이 있는 경우에만 표시 이미지 불러오기 <img src="' + additional_info + '" alt="Response Image" class="response-image" >
             if (additional_info.trim() !== '') {
-                chatEntry.innerHTML += '<div class="chatbot_r" id="chat_r_wrap"><div class="chatbot_left_wrap"><p class="chatbot_left"><img src="' + additional_info + '" alt="Response Image" class="response-image" ></p></div></div>';
+                chatEntry.innerHTML += '<div class="chatbot_q"><div class="chatbot_q_wrap"></div></div>' + 
+                                  '<div class="chatbot_r" id="chat_r_wrap"><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left" style="width:710px">'+
+                                        '<div tabindex="0" class="menu_link_title">※ 더 자세한 내용은 링크 참고 : <a href="' + additional_info + '"> 자세히 보기</div>' +
+                                    '</div></div></div>';
             } 
             chatContainer.appendChild(chatEntry);
 
@@ -486,12 +507,12 @@
             document.getElementById('user-question').value = '';
         }
 
-
-        function sendQuestion_button(question_id) {   
+        function sendQuestion_button(question_id ,question) {   
             var userQuestion = question_id;     
 
             if(question_id == "menu" ){
-                menu_button();
+                question = '메뉴'
+                menu_button(question);
             }else if(question_id == "map"){
                 userQuestion = "학교"
                 else_button(userQuestion);// 값을 app.py로 넘겨서 엑셀에서 값을 출력할 필요가 있는 경우 사용
@@ -512,44 +533,36 @@
             }
         }
         
-        function menu_button() {
+        function menu_button(question) {
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
-            chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">메뉴</p></div></div>
-                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
-                                    다음은 동의대학교 메뉴에 관한 정보입니다 어떤 장소의 메뉴가 필요하신가요?<br><br>
-                                    <div tabindex="0" class="menu_link_title"> 행복 기숙사 메뉴  ||  효민 기숙사 메뉴 </div>
-                                    <div class="menu_item1">
-                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
-                                            <span id = "question_menu_button" class="ico_comm"></span>
-                                            <div class="menu_unit"><span class="menu_txt"><span>아침 메뉴</span></span></div>
-                                        </a>
-                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
-                                            <span id = "question_menu_button" class="ico_comm"></span>
-                                            <div class="menu_unit"><span class="menu_txt"><span>점심 메뉴</span></span></div>
-                                        </a>
-                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
-                                            <span id = "question_menu_button" class="ico_comm"></span>
-                                            <div class="menu_unit"><span class="menu_txt"><span>저녁 메뉴</span></span></div>
-                                        </a>
-                                    </div>
-                                    <div class="menu_item1">
-                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
-                                            <span id = "question_menu_button" class="ico_comm"></span>
-                                            <div class="menu_unit"><span class="menu_txt"><span>아침 메뉴</span></span></div>
-                                        </a>
-                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
-                                            <span id = "question_menu_button" class="ico_comm"></span>
-                                            <div class="menu_unit"><span class="menu_txt"><span>점심 메뉴</span></span></div>
-                                        </a>
-                                        <a href="#none" class="menu_link1" tabindex="0" id = "hangmenu" onclick = "menu_button_output(this.id)">
-                                            <span id = "question_menu_button" class="ico_comm"></span>
-                                            <div class="menu_unit"><span class="menu_txt"><span>저녁 메뉴</span></span></div>
-                                        </a>
-                                    </div>
-                                   
-                                    
-                                    </div></div></div>`;
+            chatEntry.innerHTML = '<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">'+question+'</p></div></div>' +
+                                '<div class="chatbot_r" id="chat_r_wrap" ><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap" ><div id="introduce1" class="chatbot_left" style="width:450px">' +
+                                '다음은 동의대학교 메뉴에 관한 정보입니다 어떤 장소의 메뉴가 필요하신가요?<br><br>' +
+                                '<div tabindex="0" class="menu_link_title"> 행복 기숙사 메뉴  ||  효민 기숙사 메뉴 </div>' +
+                                '<div class="menu_item1">' +
+                                '<a href="#none" class="menu_link1" tabindex="0" id="hangmenu_1" onclick="menu_button_output(this.id)" style="height:40px">' +
+                                '<div class="menu_unit"><span class="menu_txt"><span>아침 메뉴</span></span></div>' +
+                                '</a>' +
+                                '<a href="#none" class="menu_link1" tabindex="0" id="hangmenu_2" onclick="menu_button_output(this.id)" style="height:40px">' +
+                                '<div class="menu_unit"><span class="menu_txt"><span>점심 메뉴</span></span></div>' +
+                                '</a>' +
+                                '<a href="#none" class="menu_link1" tabindex="0" id="hangmenu_3" onclick="menu_button_output(this.id)" style="height:40px">' +
+                                '<div class="menu_unit"><span class="menu_txt"><span>저녁 메뉴</span></span></div>' +
+                                '</a>' +
+                                '</div>' +
+                                '<div class="menu_item1">' +
+                                '<a href="#none" class="menu_link1" tabindex="0" id="hoymin_1" onclick="menu_button_output(this.id)" style="height:40px">' +
+                                '<div class="menu_unit"><span class="menu_txt"><span>아침 메뉴</span></span></div>' +
+                                '</a>' +
+                                '<a href="#none" class="menu_link1" tabindex="0" id="hoymin_2" onclick="menu_button_output(this.id)" style="height:40px">' +
+                                '<div class="menu_unit"><span class="menu_txt"><span>점심 메뉴</span></span></div>' +
+                                '</a>' +
+                                '<a href="#none" class="menu_link1" tabindex="0" id="hoymin_3" onclick="menu_button_output(this.id)" style="height:40px">' +
+                                '<div class="menu_unit"><span class="menu_txt"><span>저녁 메뉴</span></span></div>' +
+                                '</a>' +
+                                '</div>' +
+                                '</div></div></div>';
 
             //위의 chatEntry내용을 html에 넣음
             chatContainer.appendChild(chatEntry);
@@ -570,18 +583,26 @@
                     document.getElementById('loading-indicator').style.display = 'none';
                 }
             };
-            if(idvalue=="hangmenu"){
-                xhr.send('user_question=' + encodeURIComponent("식단"));
-            }else{
-                xhr.send('user_question=' + encodeURIComponent("말"));
+            if(idvalue=="hangmenu_1"){
+                xhr.send('user_question=' + encodeURIComponent("행긱 아침"));
+            }else if(idvalue=="hangmenu_2"){
+                xhr.send('user_question=' + encodeURIComponent("행긱 점심"));
+            }else if(idvalue=="hangmenu_3"){
+                xhr.send('user_question=' + encodeURIComponent("행긱 저녁"));
+            }else if(idvalue=="hoymin_1"){
+                xhr.send('user_question=' + encodeURIComponent("효민 아침"));
+            }else if(idvalue=="hoymin_2"){
+                xhr.send('user_question=' + encodeURIComponent("효민 점심"));
+            }else if(idvalue=="hoymin_3"){
+                xhr.send('user_question=' + encodeURIComponent("효민 저녁"));
             }
         }
 
         function bus_time_button(){
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
-            chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">메뉴</p></div></div>
-                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left" style="width:710px">
+            chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">셔틀 버스 시간</p></div></div>
+                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left" style="width:710px">
                                     다음은 동의대학교 셔틀버스 정류장 시간 및 위치입니다.<br><br>
                                     <div tabindex="0" class="menu_link_title">순환버스 노선 및 운행시간 안내</div>
                                         <div class="bus_time_p">
@@ -595,15 +616,15 @@
 
                                     <div tabindex="0" class="menu_link_title">시외통학버스 지역별 노선도 및 탑승시간</div>
                                         <div>
-                                            <p>■ 울산방면 :</p>
-                                            <p>■ 등교시 : 학성공원(07:00) → 태화로터리(07:10) → 공업탑로터리(07:15) → 신복로터리(07:20) → 동의대학교(08:35)</p>
-                                            <p>■ 하교시 : 동의대학교(18:10) → 신복로터리(19:10) → 공업탑로터리(19:25) → 태화로터리(19:35) → 학성공원(19:50)</p>
-                                            <p>■ 마산·장유방면 : 10분</p>
-                                            <p>■ 등교시 : 마산역 프리마호텔(07:25) → 장유고속버스환승정류장(07:55) → 동의대학교(08:35)</p>
-                                            <p>■ 하교시 : 동의대학교(18:10) → 장유고속버스환승정류장(19:00) → 마산역 프리마호텔(19:30)</p>
+                                            <p>■ 울산방면</p>
+                                            <p>등교시 : 학성공원(07:00) → 태화로터리(07:10) → 공업탑로터리(07:15) → 신복로터리(07:20) → 동의대학교(08:35)</p>
+                                            <p>하교시 : 동의대학교(18:10) → 신복로터리(19:10) → 공업탑로터리(19:25) → 태화로터리(19:35) → 학성공원(19:50)</p>
+                                            <p>■ 마산·장유방면</p>
+                                            <p>등교시 : 마산역 프리마호텔(07:25) → 장유고속버스환승정류장(07:55) → 동의대학교(08:35)</p>
+                                            <p>하교시 : 동의대학교(18:10) → 장유고속버스환승정류장(19:00) → 마산역 프리마호텔(19:30)</p>
                                             <p>■ 창원지역</p>
-                                            <p>■ 등교시 : 창원시외버스터미널 맞은편(07:25) → 남산시외터미널(07:40) → 동의대학교(08:35)</p>
-                                            <p>■ 하교시 : 동의대학교(18:10) → 남산시외버스터미널(19:10) → 창원시외버스터미널(19:25)</p>
+                                            <p>등교시 : 창원시외버스터미널 맞은편(07:25) → 남산시외터미널(07:40) → 동의대학교(08:35)</p>
+                                            <p>하교시 : 동의대학교(18:10) → 남산시외버스터미널(19:10) → 창원시외버스터미널(19:25)</p>
                                         </div>
                                         <div tabindex="0" class="menu_link_title">※ 더 자세한 내용은 링크 참고 : <a href="https://www.deu.ac.kr/www/content/13"> 자세히 보기</div>
                                     </div></div></div>`;
@@ -618,7 +639,7 @@
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">학사일정</p></div></div>
-                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
+                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
                                     학사일정이 궁금하신가요?📆<br><br>
                                     학사일정 페이지에서 등록, 수강, 시험, 휴복학, 졸업 등 연간 학사 일정을 확인할 수 있어요.<br><br>
 
@@ -645,7 +666,7 @@
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">공지사항</p></div></div>
-                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
+                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
                                     공지사항이 궁금하신가요?📆<br><br>
                                     공지사항 페이지에서 다양한 정보들을 확인할 수 있어요<br><br>
 
@@ -672,18 +693,25 @@
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">등록금</p></div></div>
-                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
-                                    등록금이 궁금하신가요?📆<br><br>
-                                    등록금 페이지에서 다양한 정보들을 확인할 수 있어요<br><br>
-
-                                    아래버튼을 눌러 바로 확인해보세요.😉<br><br>
-                                    <div tabindex="0" class="menu_link_title">등록금</div>
-
+                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
+                                    등록금 납부 일정 및 방법이 궁금하신가요?<br><br>
+                                    학부, 대학원 등록금 납부 일정 및 납부 방법에 관한 더 자세한 내용은 아래 버튼을 눌러 확인해보세요.<br><br>
+                                    
+                                    👇하단 카드를 넘겨 원하는 등록금 안내를 선택해 주세요.<br><br>
                                     <div class="one_item">
+                                        <div tabindex="0">■등록금 비용 안내</div>
                                         <a href="https://ipsi.deu.ac.kr/submenu.do?menuord=6&" class="one_link" tabindex="0" target="_blank">
                                             <img src="static/images/free-icon-salary-3135706.png" alt="등록금" width="40px">
                                             <span id = "question_menu_button" class="ico_comm"></span>
                                             <div class="menu_unit"><span class="menu_txt"><span>등록금<br></span></span></div>
+                                        </a>
+                                    </div>
+                                    <div class="one_item">
+                                        <div tabindex="0">■등록금 고지서 및 납부</div>
+                                        <a href="https://www.deu.ac.kr/www/boardview/3/1433" class="one_link" tabindex="0" target="_blank">
+                                            <img src="static/images/4_card.png" alt="등록금 고지서" width="40px">
+                                            <span id = "question_menu_button" class="ico_comm"></span>
+                                            <div class="menu_unit"><span class="menu_txt"><span>등록금 고지서<br></span></span></div>
                                         </a>
                                     </div>
                                    
@@ -699,7 +727,7 @@
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">교내 연락처</p></div></div>
-                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
+                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
                                     교내 연락처가 궁금하신가요?📆<br><br>
                                     교내 연락처 페이지에서 다양한 정보들을 확인할 수 있어요<br><br>
 
@@ -726,7 +754,7 @@
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">중앙도서관</p></div></div>
-                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
+                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
                                     도서관에 대해 궁금하신가요?📆<br><br>
                                     교내 중앙도서관 페이지에서 다양한 정보들을 확인할 수 있어요<br><br>
 
@@ -753,7 +781,7 @@
             var chatContainer = document.getElementById('chat-container-wrap');
             var chatEntry = document.createElement('div');
             chatEntry.innerHTML = `<div class="chatbot_q"><div class="chatbot_q_wrap"><p class="chatbot_right">수강신청</p></div></div>
-                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.jpg" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
+                                  <div class="chatbot_r" id="chat_r_wrap"><span class="bot_img"><img src="static/images/left_logo.png" id="chatbot-img"></span><div class="chatbot_left_wrap"><div id="introduce1" class="chatbot_left">
                                     수강신청에 대해 궁금하신가요?📆<br><br>
                                     학교의 수강신청 페이지에서 다양한 정보들을 확인할 수 있어요<br><br>
 
@@ -762,12 +790,11 @@
 
                                     <div class="one_item">
                                         <a href="http://sugang.deu.ac.kr:8080/DEUSugang_Login.aspx" class="one_link" tabindex="0" target="_blank">
-                                            
+                                            <img src="static/images/8_payment.png" alt="수강신청" width="40px">
                                             <span id = "question_menu_button" class="ico_comm"></span>
                                             <div class="menu_unit"><span class="menu_txt"><span>수강신청<br></span></span></div>
                                         </a>
                                     </div>
-                                   
                                     </div></div></div>`;
            
             chatContainer.appendChild(chatEntry);
@@ -794,6 +821,7 @@
             };
             xhr.send('user_question=' + encodeURIComponent(userQuestion));
         }
+
     </script>
 </body>
 </html>
