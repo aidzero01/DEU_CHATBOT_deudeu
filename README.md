@@ -5,3 +5,5 @@
 편집기 : vscode , 
 
 웹 프레임워크 : flask 및 라이브러리 python pandas 사용 
+
+![js](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white)
