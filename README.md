@@ -6,4 +6,4 @@
 
 웹 프레임워크 : flask 및 라이브러리 python pandas 사용 
 
-https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white
+![js](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
